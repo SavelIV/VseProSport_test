@@ -3,7 +3,7 @@
 
 namespace frontend\controllers;
 
-use common\models\searchers\TaskSearch;
+use common\models\searchers\FrontendTaskSearch;
 use common\models\Task;
 use Yii;
 use yii\web\Controller;
@@ -15,7 +15,7 @@ class TaskController extends Controller
      */
     public function actionIndex(): string
     {
-        $searchModel = new TaskSearch();
+        $searchModel = new FrontendTaskSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $statuses = Task::getStatusLabels();

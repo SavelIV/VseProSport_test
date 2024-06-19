@@ -6,6 +6,7 @@ use common\models\Task;
 use common\models\searchers\TaskSearch;
 use Throwable;
 use Yii;
+use yii\caching\TagDependency;
 use yii\db\Exception;
 use yii\db\StaleObjectException;
 use yii\web\Response;
@@ -41,6 +42,7 @@ class TaskController extends DefaultController
 
         if ($this->task->load(Yii::$app->request->post())) {
             if ($this->task->save()) {
+                $this->invalidateCache();
                 Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Задача добавлена!'));
                 return $this->redirect(['index']);
             } else {
@@ -60,6 +62,7 @@ class TaskController extends DefaultController
     {
         if ($this->task->load(Yii::$app->request->post())) {
             if ($this->task->save()) {
+                $this->invalidateCache();
                 Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Задача обновлена!'));
                 return $this->refresh();
             } else {
@@ -79,6 +82,7 @@ class TaskController extends DefaultController
     public function actionDelete(int $id): Response
     {
         if ($this->task->delete()) {
+            $this->invalidateCache();
             Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Задача удалена!'));
             return $this->redirect(['index']);
         } else {
@@ -86,5 +90,15 @@ class TaskController extends DefaultController
         }
 
         return $this->redirect(['update', 'id' => $this->task->task_id]);
+    }
+
+    /**
+     * @return void
+     */
+    private function invalidateCache(): void
+    {
+        TagDependency::invalidate(
+            Yii::$app->cache, ['all-tasks-cache']
+        );
     }
 }

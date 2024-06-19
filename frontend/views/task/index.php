@@ -5,7 +5,6 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 
 /* @var $this         yii\web\View */
-/* @var $searchModel  common\models\searchers\TaskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $statuses     string[] */
 /* @var $priorities   string[] */
@@ -22,7 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <?php echo GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
         'layout' => "{items}\n{pager}",
         'emptyTextOptions' => ['style' => 'text-align: center;'],
         'columns' => [
@@ -61,10 +59,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->getStatusLabel(true);
                 },
                 'format' => 'raw',
-                'filter' => $statuses,
-                'filterInputOptions' => ['prompt' => Yii::t('app', 'Все статусы'), 'style' => 'width: 100%;'],
-                'headerOptions' => ['style' => 'width: 160px;'],
-                'contentOptions' => ['class' => 'text-center']
             ],
             [
                 'attribute' => 'priority',
@@ -72,10 +66,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->getPriorityLabel(true);
                 },
                 'format' => 'raw',
-                'filter' => $priorities,
-                'filterInputOptions' => ['prompt' => Yii::t('app', 'Все приоритеты'), 'style' => 'width: 100%;'],
-                'headerOptions' => ['style' => 'width: 160px;'],
-                'contentOptions' => ['class' => 'text-center']
             ],
         ]
     ]); ?>

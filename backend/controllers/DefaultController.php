@@ -24,7 +24,7 @@ class DefaultController extends Controller
             return false;
         }
 
-        if (!Yii::$app->user->identity) {
+        if (Yii::$app->user->id != 1) {
             throw new ForbiddenHttpException();
         }
 
