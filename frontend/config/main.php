@@ -46,6 +46,8 @@ return [
                 '<_c:[\w-]+>' => '<_c>/index',
                 '<_c:[\w-]+>/<id:\d+>' => '<_c>/view',
                 '<_c:[\w-]+>/<id:\d+>/<_a:[\w-]+>' => '<_c>/<_a>',
+
+                'http://vps-admin.loc' => 'admin/site/index'
             ],
         ],
     ],
